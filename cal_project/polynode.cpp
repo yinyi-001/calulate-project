@@ -3,7 +3,7 @@
 #include<cmath>
 using namespace std;
 
-//求和
+//1.1求和
 node* polyAdd(node* poly1, node* poly2){
 	node* head = createNode(0,0);
     node* cur = head;
@@ -47,7 +47,7 @@ node* polyAdd(node* poly1, node* poly2){
     return res;
 }
 
-//求差
+//1.2求差
 node* polySub(node* poly1, node* poly2){
     node* head = createNode(0,0);
     node* cur = head;
@@ -90,7 +90,7 @@ node* polySub(node* poly1, node* poly2){
     return res;	
 }
 
-//求X时多项式的值
+//1.3求X时多项式的值
 int polyCalposX(node* a, int x){
 	int ans = 0;
 	node* cur = a;
@@ -102,7 +102,7 @@ int polyCalposX(node* a, int x){
 	return ans;
 }
 
-//求导函数
+//1.4求导函数
 node* polyDerivedfunction(node* a){
 	node* new_head = a;
 	node* cur = new_head;
@@ -114,7 +114,7 @@ node* polyDerivedfunction(node* a){
 	return new_head;
 }
 
-//处理多项式相乘
+//1.5处理多项式相乘
 node* polyPlus(node* a, node* b){
 	node* new_head = createNode(0, 0); //新多项式的哨兵节点
 	if(a->coef == 0 || b->coef == 0) { //如果a, b其中有零多项式，那么直接返回零多项式 
@@ -148,7 +148,6 @@ node* polyPlus(node* a, node* b){
 					if(tmp->coef == 0) {  //如果相加后系数为0，则删除该节点 
 						pre->next = tmp->next;
 						delete tmp;
-						continue; //继续下一次循环，避免访问已删除的节点
 					}
 				} else {	 //否则，说明tmp的指数小于e1，需要在pre和tmp之间插入新节点 
 					node* new_node = createNode(c1, e1);
@@ -156,6 +155,7 @@ node* polyPlus(node* a, node* b){
 					new_node->next = tmp;
 				}
 			}
+			cur_b = cur_b->next;
 		}
 		cur_a = cur_a->next;
 	} 
@@ -164,4 +164,30 @@ node* polyPlus(node* a, node* b){
 	node* res = new_head->next;
 	delete new_head;
 	return res;
+}
+
+
+//2.0辅助函数：判断操作符号的优先级
+int precedence(char op) {
+	if (op == '+' || op == '-') {
+		return 1;
+	} else if (op == '*' || op == '/') {
+		return 2;
+	} else if (op == '^') {
+		return 3;
+	}
+	return 0; // 非操作符返回0
+}
+
+//2.1中缀表达式转后缀表达式
+ExprNode* infixToPostfix(ExprNode* infix){
+	ExprNode* tmp = infix;
+	while(tmp != nullptr) {
+
+	}
+}
+
+//2.2后缀表达式求值
+int evaluatePostfix(ExprNode* postfix){
+
 }

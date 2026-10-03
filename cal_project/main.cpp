@@ -70,6 +70,38 @@ void printPoly(node* poly) {
     cout << endl;
 }
 
+
+// 表达式：辅助函数1：创建新节点 
+ExprNode* createExprNode(char data) {
+	ExprNode* newExprNode = new ExprNode();
+	if (newExprNode == nullptr) {
+		cout << "分配内存失败" << endl;
+		exit(EXIT_FAILURE);
+	}
+	newExprNode->data = data;
+	newExprNode->next = nullptr;
+	return newExprNode;
+}
+
+// 表达式：辅助函数2：从输入创建表达式链表
+ExprNode* createExpression() {
+	ExprNode* head = nullptr, *tail = nullptr;
+	cout << "请输入表达式（以空格分隔）：" << endl;	
+	string ExprNoderession;
+	cin >> ExprNoderession;
+	for (char ch : ExprNoderession) {
+		ExprNode* newExprNode = createExprNode(ch);
+		if (head == nullptr) {
+			head = newExprNode;
+			tail = newExprNode;
+		} else {
+			tail->next = newExprNode;
+			tail = newExprNode;
+		}
+	}
+	return head;
+}
+
 int main() {
 #ifdef _WIN32
     system("chcp 65001 > nul"); // >nul屏蔽输出代码页那行多余文字
@@ -112,7 +144,13 @@ int main() {
 			cout << ans << endl;
 		}
 	} else if (n == 2) { //表达式 
-		
+		ExprNode* infix = createExpression();
+
+		//中缀表达式转化为后缀表达式
+		ExprNode* postfix = infixToPostfix(infix);
+		//计算后缀表达式的值
+		int result = evaluatePostfix(postfix);
+		cout << "计算结果：" << result << endl;
 	} else {
 		cout << "无效输入，退出程序" << endl;
 	}

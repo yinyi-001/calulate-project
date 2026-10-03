@@ -12,8 +12,6 @@ struct node {
     node* next;            // 后继节点指针
 };
 
-//typedef pointer lklist;      // 单链表头指针类型
-
 // 多项式的核心函数声明（polynode.cpp实现）
 node* polyAdd(node* a, node* b);
 node* polySub(node* a, node* b);
@@ -21,8 +19,15 @@ int polyCalposX(node* a, int x);
 node* polyDerivedfunction(node* a);
 node* polyPlus(node* a, node* b); 
 
-//表达式的核心函数声明（polynode.cpp实现）
 
+struct ExprNode {
+	char data; // 存储操作数或运算符
+	ExprNode* next; // 指向下一个节点的指针	
+};
+
+//表达式的核心函数声明（polynode.cpp实现）
+ExprNode* infixToPostfix(ExprNode* infix);
+int evaluatePostfix(ExprNode* postfix);
 
 // main.cpp中已实现
 node* createNode(int coef, int exp);
